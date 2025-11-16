@@ -1,3 +1,7 @@
 {
-    "converter": "blok"
+    "converter": "blok",
+    "modules": [
+        "getreuer/sentence_case",
+        "getreuer/select_word"
+    ]
 }
