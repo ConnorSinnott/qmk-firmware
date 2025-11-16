@@ -31,7 +31,6 @@ enum layers {
 enum custom_keycodes {
     JS_ARROW = SAFE_RANGE,
     SFT_SFT,
-    JUMP
 };
 
 // Home row mods - Left hand
@@ -53,7 +52,7 @@ enum custom_keycodes {
 //[max] ########
 #define LWR_ENT  LT(_LOWER, KC_ENT) // Unused
 #define MO_LWR   MO(_LOWER)
-#define MSE_KEY  LT(_MOUSE, JUMP)
+#define MSE_KEY  LT(_MOUSE, KC_SCLN) // LALT and LSFT are added on process_record_user
 
 // Mod taps
 //[max] ########
@@ -204,6 +203,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code(KC_RSFT);
             }
             return false;
+        case MSE_KEY:
+            if(record->tap.count != 0) { // When tapped and not held
+                if(record->event.pressed) { // On press
+                    add_mods(MOD_BIT(KC_LSFT));
+                    add_mods(MOD_BIT(KC_LALT));
+                } else { // On release
+                    del_mods(MOD_BIT(KC_LSFT));
+                    del_mods(MOD_BIT(KC_LALT));
+                }
+            }
     }
     return true;
 }
