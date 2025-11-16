@@ -65,6 +65,8 @@ enum custom_keycodes {
 #define APP_BACK G(KC_LBRC)
 #define APP_FORW G(KC_RBRC)
 #define DEL_WORD A(KC_BSPC)
+
+// Toggle Keys
 #define SC_TOGG SENTENCE_CASE_TOGGLE
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -82,49 +84,49 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_LOWER] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      RM_TOGG, UG_SPDU, UG_VALU, UG_NEXT, KC_TRNS, KC_TRNS,                      JW_LEFT, KC_TRNS, KC_TRNS, JW_RGHT, KC_PGUP, KC_TRNS,
+      RM_TOGG, UG_SPDU, UG_VALU, UG_NEXT, _______, _______,                      JW_LEFT, _______, _______, JW_RGHT, KC_PGUP, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_TRNS, UG_SPDD, UG_VALD, UG_PREV, KC_TRNS,JS_ARROW,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_PGDN,  KC_F12,
+      _______, UG_SPDD, UG_VALD, UG_PREV, _______,JS_ARROW,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_PGDN,  KC_F12,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      CW_TOGG, C(KC_1), C(KC_2), C(KC_3), C(KC_4), C(KC_5),                      KC_TRNS, KC_TRNS, KC_TRNS,APP_BACK,APP_FORW, SFT_SFT,
+      CW_TOGG, C(KC_1), C(KC_2), C(KC_3), C(KC_4), C(KC_5),                      _______, _______, _______,APP_BACK,APP_FORW, SFT_SFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                         DEL_WORD, KC_BSPC,DEL_WORD,    KC_TRNS, KC_TRNS, KC_TRNS
+                                         DEL_WORD, KC_BSPC,DEL_WORD,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
     [_RAISE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_TRNS, KC_TRNS,  KC_AT, KC_LCBR, KC_RCBR, KC_TRNS,                       KC_TRNS, KC_TILD, KC_ASTR, KC_PLUS, KC_TRNS,  KC_F12,
+      _______, _______,  KC_AT, KC_LCBR, KC_RCBR, _______,                       _______, KC_TILD, KC_ASTR, KC_PLUS, _______,  KC_F12,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_TRNS, KC_HASH,  KC_DLR, KC_LPRN, KC_RPRN, KC_MINS,                      KC_UNDS, KC_COLN, KC_AMPR, KC_EXLM,  KC_EQL,  KC_F12,
+      _______, KC_HASH,  KC_DLR, KC_LPRN, KC_RPRN, KC_MINS,                      KC_UNDS, KC_COLN, KC_AMPR, KC_EXLM,  KC_EQL,  KC_F12,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_TRNS, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TRNS,                      KC_TRNS, KC_SCLN,  KC_GRV, KC_PIPE, KC_BSLS, KC_TRNS,
+      _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, _______,                      _______, KC_SCLN,  KC_GRV, KC_PIPE, KC_BSLS, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_TRNS, KC_TRNS, KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS
+                                          _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
     [_MOUSE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_TRNS, KC_TRNS, KC_TRNS, MS_WHLU, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS,   MS_UP, KC_TRNS, KC_TRNS, KC_TRNS,
+      _______, _______, _______, MS_WHLU, _______, _______,                      _______, _______,   MS_UP, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_TRNS, MS_BTN2, MS_BTN3, MS_WHLD, MS_BTN1, KC_TRNS,                      KC_TRNS, MS_LEFT, MS_DOWN, MS_RGHT, KC_TRNS, KC_TRNS,
+      _______, MS_BTN2, MS_BTN3, MS_WHLD, MS_BTN1, _______,                      _______, MS_LEFT, MS_DOWN, MS_RGHT, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+      _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_TRNS, KC_TRNS, KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS
+                                          _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
     [_NUMBER] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS,    KC_7,    KC_8,    KC_9, KC_TRNS, KC_TRNS,
+      _______, _______, _______, _______, _______, _______,                      _______,    KC_7,    KC_8,    KC_9, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_TRNS, KC_TRNS, SELLINE, SELWBAK, SELWORD, KC_MINS,                      KC_UNDS,    KC_4,    KC_5,    KC_6, KC_TRNS, KC_TRNS,
+      _______, _______, SELLINE, SELWBAK, SELWORD, KC_MINS,                      KC_UNDS,    KC_4,    KC_5,    KC_6, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, SC_TOGG, KC_TRNS,                      KC_TRNS,    KC_1,    KC_2,    KC_3,    KC_0, KC_TRNS,
+      _______, _______, _______, _______, SC_TOGG, _______,                      _______,    KC_1,    KC_2,    KC_3,    KC_0, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_TRNS, KC_TRNS, KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS
+                                          _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   )
 };
