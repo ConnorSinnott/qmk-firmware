@@ -20,8 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-//#define USE_MATRIX_I2C
-
 // Home row mods configuration (matching ZMK settings)
 #define TAPPING_TERM 200
 #define QUICK_TAP_TERM 175

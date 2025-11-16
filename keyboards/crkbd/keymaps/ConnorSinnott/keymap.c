@@ -30,11 +30,12 @@ enum layers {
 // Custom keycodes
 enum custom_keycodes {
     JS_ARROW = SAFE_RANGE,
-    SHIFT_SHIFT,
+    SFT_SFT,
     JUMP
 };
 
 // Home row mods - Left hand
+//[max] ########
 #define HRM_A    LT(_RAISE, KC_A)
 #define HRM_R    MT(MOD_LCTL, KC_R)
 #define HRM_S    MT(MOD_LGUI, KC_S)
@@ -42,17 +43,30 @@ enum custom_keycodes {
 #define HRM_Z    LT(_NUMBER, KC_Z)
 
 // Home row mods - Right hand
+//[max] ########
 #define HRM_N    MT(MOD_RSFT, KC_N)
 #define HRM_E    MT(MOD_LGUI, KC_E)
 #define HRM_I    MT(MOD_RCTL, KC_I)
 #define HRM_O    LT(_RAISE, KC_O)
 
 // Layer taps
-#define LWR_ENT  LT(_LOWER, KC_ENT)
+//[max] ########
+#define LWR_ENT  LT(_LOWER, KC_ENT) // Unused
+#define MO_LWR   MO(_LOWER)
 #define MSE_KEY  LT(_MOUSE, JUMP)
 
 // Mod taps
+//[max] ########
 #define CMD_SPC  MT(MOD_LGUI, KC_SPC)
+
+// Mod keys
+//[max] ########
+#define JW_LEFT  A(KC_LEFT)
+#define JW_RGHT  A(KC_RIGHT)
+#define APP_BACK G(KC_LBRC)
+#define APP_FORW G(KC_RBRC)
+#define DEL_WORD A(KC_BSPC)
+#define SC_TOGG SENTENCE_CASE_TOGGLE
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_DEFAULT] = LAYOUT_split_3x6_3(
@@ -61,45 +75,45 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
        KC_ESC,   HRM_A,   HRM_R,   HRM_S,   HRM_T,    KC_G,                         KC_M,   HRM_N,   HRM_E,   HRM_I,   HRM_O, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-       CW_TOGG,  HRM_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, SHIFT_SHIFT,
+      CW_TOGG,   HRM_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, SFT_SFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_ESC, CMD_SPC,  KC_TAB,     KC_ENT, MO(_LOWER), MSE_KEY
+                                           KC_ESC, CMD_SPC,  KC_TAB,     KC_ENT,  MO_LWR, MSE_KEY
                                       //`--------------------------'  `--------------------------'
   ),
 
     [_LOWER] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      RM_TOGG, UG_SPDU, UG_VALU, UG_NEXT, KC_TRNS, KC_TRNS,                   A(KC_LEFT), KC_TRNS, KC_TRNS,A(KC_RGHT), KC_PGUP, KC_TRNS,
+      RM_TOGG, UG_SPDU, UG_VALU, UG_NEXT, KC_TRNS, KC_TRNS,                      JW_LEFT, KC_TRNS, KC_TRNS, JW_RGHT, KC_PGUP, KC_TRNS,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_TRNS, UG_SPDD, UG_VALD, UG_PREV, KC_TRNS,JS_ARROW,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_PGDN,  KC_F12,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      CW_TOGG,C(KC_1), C(KC_2), C(KC_3), C(KC_4), C(KC_5),                      KC_TRNS, KC_TRNS, KC_TRNS,G(KC_LBRC),G(KC_RBRC),SHIFT_SHIFT,
+      CW_TOGG, C(KC_1), C(KC_2), C(KC_3), C(KC_4), C(KC_5),                      KC_TRNS, KC_TRNS, KC_TRNS,APP_BACK,APP_FORW, SFT_SFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                       A(KC_BSPC),KC_BSPC,A(KC_BSPC),  KC_TRNS, _______, KC_TRNS
+                                         DEL_WORD, KC_BSPC,DEL_WORD,    KC_TRNS, KC_TRNS, KC_TRNS
                                       //`--------------------------'  `--------------------------'
   ),
 
     [_RAISE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_TRNS, KC_TRNS,  KC_AT, KC_LCBR, KC_RCBR, KC_TRNS,                      KC_TRNS, KC_TILD, KC_ASTR, KC_PLUS, KC_TRNS,  KC_F12,
+      KC_TRNS, KC_TRNS,  KC_AT, KC_LCBR, KC_RCBR, KC_TRNS,                       KC_TRNS, KC_TILD, KC_ASTR, KC_PLUS, KC_TRNS,  KC_F12,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_TRNS, KC_HASH,  KC_DLR, KC_LPRN, KC_RPRN, KC_MINS,                      KC_UNDS, KC_COLN, KC_AMPR, KC_EXLM,  KC_EQL,  KC_F12,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_TRNS, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TRNS,                      KC_TRNS, KC_SCLN,  KC_GRV, KC_PIPE, KC_BSLS, KC_TRNS,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                        KC_TRNS, KC_TRNS, KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS
+                                          KC_TRNS, KC_TRNS, KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS
                                       //`--------------------------'  `--------------------------'
   ),
 
     [_MOUSE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_TRNS, KC_TRNS, KC_TRNS, MS_WHLU, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS,  MS_UP, KC_TRNS, KC_TRNS, KC_TRNS,
+      KC_TRNS, KC_TRNS, KC_TRNS, MS_WHLU, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS,   MS_UP, KC_TRNS, KC_TRNS, KC_TRNS,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_TRNS, MS_BTN2, MS_BTN3, MS_WHLD, MS_BTN1, KC_TRNS,                      KC_TRNS, MS_LEFT, MS_DOWN, MS_RGHT, KC_TRNS, KC_TRNS,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                        KC_TRNS, KC_TRNS, KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS
+                                          KC_TRNS, KC_TRNS, KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -109,9 +123,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_TRNS, KC_TRNS, SELLINE, SELWBAK, SELWORD, KC_MINS,                      KC_UNDS,    KC_4,    KC_5,    KC_6, KC_TRNS, KC_TRNS,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, SENTENCE_CASE_TOGGLE, KC_TRNS,                      KC_TRNS,    KC_1,    KC_2,    KC_3,    KC_0, KC_TRNS,
+      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, SC_TOGG, KC_TRNS,                      KC_TRNS,    KC_1,    KC_2,    KC_3,    KC_0, KC_TRNS,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                        KC_TRNS, KC_TRNS, KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS
+                                          KC_TRNS, KC_TRNS, KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS
                                       //`--------------------------'  `--------------------------'
   )
 };
@@ -184,7 +198,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING("=>");
             }
             return false;
-        case SHIFT_SHIFT:
+        case SFT_SFT:
             if (record->event.pressed) {
                 tap_code(KC_RSFT);
                 tap_code(KC_RSFT);
