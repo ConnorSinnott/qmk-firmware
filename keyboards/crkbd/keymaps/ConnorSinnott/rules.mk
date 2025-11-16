@@ -1,0 +1,11 @@
+RGBLIGHT_ENABLE = no
+RGB_MATRIX_ENABLE = yes
+RGB_MATRIX_MAXIMUM_BRIGHTNESS = 150
+SPLIT_KEYBOARD = yes
+
+# Enable mouse keys
+MOUSEKEY_ENABLE = yes
+
+# Enable caps word
+CAPS_WORD_ENABLE = yes
+
