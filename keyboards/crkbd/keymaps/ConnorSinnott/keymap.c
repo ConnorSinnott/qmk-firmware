@@ -217,78 +217,48 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-// LED index mapping for Colemak layout
-// Use these constants to reference specific keys in your RGB functions
-//#ifdef RGB_MATRIX_ENABLE
-//// Left hand - Top row
-//#define LED_Q    18
-//#define LED_W    17
-//#define LED_F    12
-//#define LED_P    11
-//#define LED_B    4
-//
-//// Left hand - Home row
-//#define LED_A    19
-//#define LED_R    16
-//#define LED_S    13
-//#define LED_T    10
-//#define LED_G    5
-//
-//// Left hand - Bottom row
-//#define LED_Z    20
-//#define LED_X    15
-//#define LED_C    14
-//#define LED_D    9
-//#define LED_V    6
-//
-//// Left hand - Thumb keys
-//#define LED_L_THUMB_OUTER   0
-//#define LED_L_THUMB_MID     7
-//#define LED_L_THUMB_INNER   8
-//
-//// Right hand - Top row
-//#define LED_J       39
-//#define LED_L       38
-//#define LED_U       33
-//#define LED_Y       32
-//#define LED_SCLN    25
-//#define LED_BSLS    24
-//
-//// Right hand - Home row
-//#define LED_M       40
-//#define LED_N       37
-//#define LED_E       34
-//#define LED_I       31
-//#define LED_O       26
-//#define LED_QUOT    23
-//
-//// Right hand - Bottom row
-//#define LED_K       41
-//#define LED_H       36
-//#define LED_COMM    35
-//#define LED_DOT     30
-//#define LED_SLSH    27
-//#define LED_RSHIFT  22
-//
-//// Right hand - Thumb keys
-//#define LED_R_THUMB_OUTER   21
-//#define LED_R_THUMB_MID     28
-//#define LED_R_THUMB_INNER   29
-//
-//// RGB Matrix layer indication
-//bool rgb_matrix_indicators_user(void) {
-//    // Only apply layer colors when on the LOWER layer
-//    if (get_highest_layer(layer_state) == _LOWER) {
-//        // Set the arrow keys (M, N, E, I positions) to blue
-//        // These LEDs correspond to LEFT, DOWN, UP, RIGHT on the _LOWER layer
-//        rgb_matrix_set_color(LED_I, 0, 0, 255);  // RIGHT arrow - Blue
-//        rgb_matrix_set_color(LED_E, 0, 0, 255);  // UP arrow - Blue
-//        rgb_matrix_set_color(LED_N, 0, 0, 255);  // DOWN arrow - Blue
-//        rgb_matrix_set_color(LED_M, 0, 0, 255);  // LEFT arrow - Blue
-//    }
-//    return false;
-//}
-//#endif
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    uint8_t layer = get_highest_layer(layer_state);
+    if (layer > 0) {
+        for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
+            for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
+                uint8_t index = g_led_config.matrix_co[row][col];
+
+                if (index >= led_min && index < led_max && index != NO_LED) {
+                    uint8_t keycode_at_index = keymap_key_to_keycode(layer, (keypos_t){col,row});
+
+                    if(keycode_at_index > KC_TRNS) {
+//                        switch(layer) {
+//                            case _RAISE: {
+//                                switch(row) {
+//                                    case 0: {
+//                                        rgb_matrix_set_color(index, RGB_RED);
+//                                        break;
+//                                    }
+//                                    case 1: {
+//                                        rgb_matrix_set_color(index, RGB_ORANGE);
+//                                        break;
+//                                    }
+//                                    case 2: {
+//                                        rgb_matrix_set_color(index, RGB_YELLOW);
+//                                        break;
+//                                    }
+//                                    case 3: {
+//                                        rgb_matrix_set_color(index, RGB_WHITE);
+//                                        break;
+//                                    }
+//                                }
+//                            }
+//                        }
+                    } else {
+                        rgb_matrix_set_color(index, RGB_OFF);
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
 
 #ifdef ENCODER_MAP_ENABLE
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
