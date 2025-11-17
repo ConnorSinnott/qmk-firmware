@@ -8,4 +8,3 @@ MOUSEKEY_ENABLE = yes
 
 # Enable caps word
 CAPS_WORD_ENABLE = yes
-

@@ -40,6 +40,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MOUSEKEY_WHEEL_TIME_TO_MAX 40
 
 #define SPLIT_LAYER_STATE_ENABLE
+//#define SPLIT_TRANSPORT_MIRROR
+#define SPLIT_MODS_ENABLE
 
 // Caps word configuration (matching ZMK behavior)
 #define CAPS_WORD_IDLE_TIMEOUT 5000

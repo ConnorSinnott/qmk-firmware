@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include QMK_KEYBOARD_H
+#include "print.h"
 
 // Layer definitions
 enum layers {
@@ -24,7 +25,8 @@ enum layers {
     _LOWER,
     _RAISE,
     _MOUSE,
-    _NUMBER
+    _NUMBER,
+    _ADJUST
 };
 
 // Custom keycodes
@@ -53,6 +55,7 @@ enum custom_keycodes {
 #define LWR_ENT  LT(_LOWER, KC_ENT) // Unused
 #define MO_LWR   MO(_LOWER)
 #define MSE_KEY  LT(_MOUSE, KC_SCLN) // LALT and LSFT are added on process_record_user
+#define ADJ_PIP  LT(_ADJUST, KC_BSLS)
 
 // Mod taps
 //[max] ########
@@ -72,7 +75,7 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_DEFAULT] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, KC_BSLS,
+       KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, ADJ_PIP,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
        KC_ESC,   HRM_A,   HRM_R,   HRM_S,   HRM_T,    KC_G,                         KC_M,   HRM_N,   HRM_E,   HRM_I,   HRM_O, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -84,11 +87,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_LOWER] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      RM_TOGG, UG_SPDU, UG_VALU, UG_NEXT, _______, _______,                      JW_LEFT, _______, _______, JW_RGHT, KC_PGUP, _______,
+      _______, _______, _______, _______, _______, _______,                      JW_LEFT, _______, _______, JW_RGHT, KC_PGUP, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, UG_SPDD, UG_VALD, UG_PREV, _______,JS_ARROW,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_PGDN,  KC_F12,
+      _______, _______, _______, _______, _______,JS_ARROW,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_PGDN,  KC_F12,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      CW_TOGG, C(KC_1), C(KC_2), C(KC_3), C(KC_4), C(KC_5),                      _______, _______, _______,APP_BACK,APP_FORW, SFT_SFT,
+      _______, C(KC_1), C(KC_2), C(KC_3), C(KC_4), C(KC_5),                      _______, _______, _______,APP_BACK,APP_FORW, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                          DEL_WORD, KC_BSPC,DEL_WORD,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -124,11 +127,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, _______, SELLINE, SELWBAK, SELWORD, KC_MINS,                      KC_UNDS,    KC_4,    KC_5,    KC_6, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, _______, SC_TOGG, _______,                      _______,    KC_1,    KC_2,    KC_3,    KC_0, _______,
+      _______, _______, _______, _______, _______, _______,                      _______,    KC_1,    KC_2,    KC_3,    KC_0, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
-  )
+  ),
+
+    [_ADJUST] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      RM_TOGG, UG_SPDU, UG_VALU, UG_NEXT, _______, _______,                      _______, _______, _______, _______, _______, _______,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______, UG_SPDD, UG_VALD, UG_PREV, _______, _______,                      _______, _______, _______, _______, _______, _______,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______, _______, _______, _______, SC_TOGG, _______,                      _______, _______, _______, _______, _______, _______,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          _______, _______, _______,    _______, _______, _______
+                                      //`--------------------------'  `--------------------------'
+    )
 };
 
 // Caps word configuration - allow underscore, backspace, delete, minus
@@ -221,42 +236,54 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     uint8_t layer = get_highest_layer(layer_state);
-    if (layer > 0) {
-        for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
-            for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
-                uint8_t index = g_led_config.matrix_co[row][col];
+    switch(layer) {
+        case _DEFAULT: {
+            uint8_t mods = get_mods();
 
-                if (index >= led_min && index < led_max && index != NO_LED) {
-                    uint8_t keycode_at_index = keymap_key_to_keycode(layer, (keypos_t){col,row});
+            if(is_caps_word_on()) {
+                rgb_matrix_set_color(g_led_config.matrix_co[2][0], RGB_RED);
+                rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_RED);
+            } else if (is_sentence_case_primed()) {
+                rgb_matrix_set_color(g_led_config.matrix_co[2][0], RGB_WHITE);
+                rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_WHITE);
+            } else if (mods & MOD_BIT(KC_LSFT) || mods & MOD_BIT(KC_RSFT)) {
+                rgb_matrix_set_color(g_led_config.matrix_co[2][0], RGB_ORANGE);
+                rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_ORANGE);
+            }
 
-                    if(keycode_at_index > KC_TRNS) {
-//                        switch(layer) {
-//                            case _RAISE: {
-//                                switch(row) {
-//                                    case 0: {
-//                                        rgb_matrix_set_color(index, RGB_RED);
-//                                        break;
-//                                    }
-//                                    case 1: {
-//                                        rgb_matrix_set_color(index, RGB_ORANGE);
-//                                        break;
-//                                    }
-//                                    case 2: {
-//                                        rgb_matrix_set_color(index, RGB_YELLOW);
-//                                        break;
-//                                    }
-//                                    case 3: {
-//                                        rgb_matrix_set_color(index, RGB_WHITE);
-//                                        break;
-//                                    }
-//                                }
-//                            }
-//                        }
-                    } else {
-                        rgb_matrix_set_color(index, RGB_OFF);
-                    }
+            if(mods & MOD_BIT(KC_LGUI)) {
+                rgb_matrix_set_color(g_led_config.matrix_co[1][3], RGB_PURPLE);
+                if(is_keyboard_master()) {
+                    rgb_matrix_set_color(7, RGB_PURPLE);
                 }
             }
+
+            if(mods & MOD_BIT(KC_LCTL) || mods & MOD_BIT(KC_RCTL)) {
+                rgb_matrix_set_color(g_led_config.matrix_co[1][2], RGB_BLUE);
+            }
+
+            break;
+        }
+        case _LOWER: {
+            break;
+        }
+        case _RAISE: {
+            break;
+        }
+        case _MOUSE: {
+            break;
+        }
+        case _NUMBER: {
+            break;
+        }
+        case _ADJUST: {
+            rgb_matrix_set_color_all(0, 0, 0);
+            if(is_keyboard_master() && is_sentence_case_on()) {
+                rgb_matrix_set_color(g_led_config.matrix_co[2][4], RGB_GREEN);
+            } else {
+                rgb_matrix_set_color(g_led_config.matrix_co[2][4], RGB_RED);
+            }
+            break;
         }
     }
     return false;
