@@ -228,11 +228,11 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             uint8_t mods = get_mods();
 
             if(is_caps_word_on()) {
-                rgb_matrix_set_color(g_led_config.matrix_co[2][0], RGB_RED);
-                rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_RED);
+                rgb_matrix_set_color(g_led_config.matrix_co[2][0], RGB_ORANGE);
+                rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_ORANGE);
             } else if (is_sentence_case_primed()) {
-                rgb_matrix_set_color(g_led_config.matrix_co[2][0], RGB_WHITE);
-                rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_WHITE);
+                rgb_matrix_set_color(g_led_config.matrix_co[2][0], RGB_ORANGE);
+                rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_ORANGE);
             } else if (mods & MOD_BIT(KC_LSFT) || mods & MOD_BIT(KC_RSFT)) {
                 rgb_matrix_set_color(g_led_config.matrix_co[2][0], RGB_ORANGE);
                 rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_ORANGE);
@@ -241,7 +241,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             if(mods & MOD_BIT(KC_LGUI)) {
                 rgb_matrix_set_color(g_led_config.matrix_co[1][3], RGB_PURPLE);
                 if(is_keyboard_master()) {
-                    rgb_matrix_set_color(7, RGB_PURPLE);
+                    rgb_matrix_set_color(6, RGB_PURPLE);
                 }
             }
 
