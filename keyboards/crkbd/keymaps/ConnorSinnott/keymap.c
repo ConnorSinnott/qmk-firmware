@@ -188,24 +188,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-// Hold on other key press per key (implements ZMK's hold-trigger-on-release behavior)
-//bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
-//    switch (keycode) {
-//        case HRM_A:
-//        case HRM_R:
-//        case HRM_S:
-//        case HRM_T:
-//        case HRM_Z:
-//        case HRM_N:
-//        case HRM_E:
-//        case HRM_I:
-//        case HRM_O:
-//            return true;
-//        default:
-//            return false;
-//    }
-//}
-
 // Macro implementation
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
