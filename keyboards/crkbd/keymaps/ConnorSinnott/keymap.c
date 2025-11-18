@@ -18,6 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 #include "print.h"
+#include "transactions.h"
+
+static bool caps_word_remote_active = false;
+static bool sentence_case_primed_remote_activate = false;
 
 // Layer definitions
 enum layers {
@@ -227,10 +231,10 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         case _DEFAULT: {
             uint8_t mods = get_mods();
 
-            if(is_caps_word_on()) {
+            if(is_caps_word_on() || caps_word_remote_active) {
                 rgb_matrix_set_color(g_led_config.matrix_co[2][0], RGB_ORANGE);
                 rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_ORANGE);
-            } else if (is_sentence_case_primed()) {
+            } else if (is_sentence_case_primed() || sentence_case_primed_remote_activate) {
                 rgb_matrix_set_color(g_led_config.matrix_co[2][0], RGB_ORANGE);
                 rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_ORANGE);
             } else if (mods & MOD_BIT(KC_LSFT) || mods & MOD_BIT(KC_RSFT)) {
@@ -265,10 +269,12 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         }
         case _ADJUST: {
             rgb_matrix_set_color_all(0, 0, 0);
-            if(is_keyboard_master() && is_sentence_case_on()) {
-                rgb_matrix_set_color(g_led_config.matrix_co[2][4], RGB_GREEN);
-            } else {
-                rgb_matrix_set_color(g_led_config.matrix_co[2][4], RGB_RED);
+            if(is_keyboard_master()) {
+                if(is_sentence_case_on()) {
+                    rgb_matrix_set_color(g_led_config.matrix_co[2][4], RGB_GREEN);
+                } else {
+                    rgb_matrix_set_color(g_led_config.matrix_co[2][4], RGB_RED);
+                }
             }
             break;
         }
@@ -285,3 +291,31 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [_NUMBER]  = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT) },
 };
 #endif
+
+#ifdef CAPS_WORD_ENABLE
+void caps_word_set_user(bool active) {
+    if (is_keyboard_master()) {
+        transaction_rpc_send(RPC_ID_USER_CAPS_WORD_SYNC, 1, &active);
+    }
+}
+#endif
+
+void sentence_case_primed(bool primed) {
+    if (is_keyboard_master()) {
+        transaction_rpc_send(RPC_ID_USER_SENTENCE_CASE_SYNC, 1, &primed);
+    }
+}
+
+void caps_word_sync(uint8_t initiator2target_buffer_size, const void *initiator2target_buffer, uint8_t target2initiator_buffer_size, void *target2initiator_buffer) {
+    caps_word_remote_active = *(const bool *)initiator2target_buffer;
+}
+
+void sentence_case_sync(uint8_t initiator2target_buffer_size, const void *initiator2target_buffer, uint8_t target2initiator_buffer_size, void *target2initiator_buffer) {
+    sentence_case_primed_remote_activate = *(const bool *)initiator2target_buffer;
+}
+
+void keyboard_post_init_user() {
+    // sync caps word state
+    transaction_register_rpc(RPC_ID_USER_CAPS_WORD_SYNC, caps_word_sync);
+    transaction_register_rpc(RPC_ID_USER_SENTENCE_CASE_SYNC, sentence_case_sync);
+}
