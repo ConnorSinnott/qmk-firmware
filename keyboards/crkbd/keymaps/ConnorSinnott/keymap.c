@@ -90,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       CW_TOGG,   HRM_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, SFT_SFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI, NUM_SPC,  KC_TAB,     KC_DEL, LWR_ENT, MSE_KEY
+                                          KC_LGUI, NUM_SPC,  KC_TAB,     KC_ENT,  MO_LWR, MSE_KEY
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -98,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______, _______, _______, _______, _______, _______,                      JW_LEFT, _______, _______, JW_RGHT, KC_PGUP, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, _______, _______,JS_ARROW,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_PGDN,  KC_F12,
+      _______, _______, SELLINE, SELWBAK, SELWORD,JS_ARROW,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_PGDN,  KC_F12,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, C(KC_1), C(KC_2), C(KC_3), C(KC_4), C(KC_5),                      _______, _______, _______,APP_BACK,APP_FORW, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -134,9 +134,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______, _______, _______, _______, _______, _______,                      _______,    KC_7,    KC_8,    KC_9, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, _______, SELLINE, SELWBAK, SELWORD, _______,                      _______,    KC_4,    KC_5,    KC_6, _______, _______,
+      _______, _______, SELLINE, SELWBAK, KC_MINS, _______,                      _______,    KC_4,    KC_5,    KC_6, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______,   CMD_Z,   CMD_X,   CMD_C, _______,   CMD_V,                      _______,    KC_1,    KC_2,    KC_3,    KC_0, _______,
+      _______,   CMD_Z,   CMD_X,   CMD_C, KC_UNDS,   CMD_V,                      _______,    KC_1,    KC_2,    KC_3,    KC_0, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -245,7 +245,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             if(mods & MOD_BIT(KC_LGUI)) {
                 rgb_matrix_set_color(g_led_config.matrix_co[1][3], RGB_PURPLE);
                 if(is_keyboard_master()) {
-                    rgb_matrix_set_color(6, RGB_PURPLE);
+                    rgb_matrix_set_color(8, RGB_PURPLE);
                 }
             }
 
@@ -256,15 +256,64 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             break;
         }
         case _LOWER: {
+            if(!is_keyboard_master()) {
+                rgb_matrix_set_color(g_led_config.matrix_co[0][2], RGB_PURPLE);
+                rgb_matrix_set_color(g_led_config.matrix_co[0][5], RGB_PURPLE);
+
+                rgb_matrix_set_color(g_led_config.matrix_co[1][2], RGB_BLUE);
+                rgb_matrix_set_color(g_led_config.matrix_co[1][3], RGB_BLUE);
+                rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_BLUE);
+                rgb_matrix_set_color(g_led_config.matrix_co[1][5], RGB_BLUE);
+
+                rgb_matrix_set_color(g_led_config.matrix_co[2][1], RGB_GREEN);
+                rgb_matrix_set_color(g_led_config.matrix_co[2][2], RGB_GREEN);
+            } else {
+                rgb_matrix_set_color(7, RGB_RED);
+                rgb_matrix_set_color(8, RGB_RED);
+
+                rgb_matrix_set_color(g_led_config.matrix_co[1][5], RGB_ORANGE);
+
+                rgb_matrix_set_color(g_led_config.matrix_co[2][1], RGB_YELLOW);
+                rgb_matrix_set_color(g_led_config.matrix_co[2][2], RGB_YELLOW);
+                rgb_matrix_set_color(g_led_config.matrix_co[2][3], RGB_YELLOW);
+                rgb_matrix_set_color(g_led_config.matrix_co[2][4], RGB_YELLOW);
+                rgb_matrix_set_color(g_led_config.matrix_co[2][5], RGB_YELLOW);
+            }
             break;
         }
         case _RAISE: {
+            rgb_matrix_set_color(g_led_config.matrix_co[1][1], RGB_WHITE);
             break;
         }
         case _MOUSE: {
+            rgb_matrix_set_color(g_led_config.matrix_co[1][2], RGB_BLUE);
+            rgb_matrix_set_color(g_led_config.matrix_co[1][3], RGB_BLUE);
+            rgb_matrix_set_color(g_led_config.matrix_co[0][3], RGB_BLUE);
+            rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_BLUE);
             break;
         }
         case _NUMBER: {
+            if(!is_keyboard_master()) {
+                rgb_matrix_set_color(g_led_config.matrix_co[0][2], RGB_BLUE);
+                rgb_matrix_set_color(g_led_config.matrix_co[0][3], RGB_BLUE);
+                rgb_matrix_set_color(g_led_config.matrix_co[0][4], RGB_BLUE);
+
+                rgb_matrix_set_color(g_led_config.matrix_co[1][2], RGB_BLUE);
+                rgb_matrix_set_color(g_led_config.matrix_co[1][3], RGB_BLUE);
+                rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_BLUE);
+
+                rgb_matrix_set_color(g_led_config.matrix_co[2][1], RGB_BLUE);
+                rgb_matrix_set_color(g_led_config.matrix_co[2][2], RGB_BLUE);
+                rgb_matrix_set_color(g_led_config.matrix_co[2][3], RGB_BLUE);
+                rgb_matrix_set_color(g_led_config.matrix_co[2][4], RGB_BLUE);
+            } else {
+                rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_WHITE);
+                rgb_matrix_set_color(g_led_config.matrix_co[2][4], RGB_WHITE);
+
+                rgb_matrix_set_color(g_led_config.matrix_co[2][1], RGB_GREEN);
+                rgb_matrix_set_color(g_led_config.matrix_co[2][2], RGB_GREEN);
+                rgb_matrix_set_color(g_led_config.matrix_co[2][3], RGB_GREEN);
+                rgb_matrix_set_color(g_led_config.matrix_co[2][5], RGB_GREEN);}
             break;
         }
         case _ADJUST: {
