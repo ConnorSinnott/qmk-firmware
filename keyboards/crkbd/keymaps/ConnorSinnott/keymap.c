@@ -96,11 +96,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_LOWER] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, _______, _______, _______, _______, _______,                      JW_LEFT, _______, _______, JW_RGHT, KC_PGUP, _______,
+      _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, KC_PGUP, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, _______, SELLINE, SELWBAK, SELWORD,JS_ARROW,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_PGDN,  KC_F12,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, C(KC_1), C(KC_2), C(KC_3), C(KC_4), C(KC_5),                      _______, _______, _______,APP_BACK,APP_FORW, _______,
+      _______, C(KC_1), C(KC_2), C(KC_3), C(KC_4), C(KC_5),                      _______, JW_LEFT, JW_RGHT,APP_BACK,APP_FORW, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                          DEL_WORD, KC_BSPC,DEL_WORD,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -170,9 +170,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case HRM_A:
         case HRM_R:
         case HRM_S:
-        case HRM_T:
         case HRM_Z:
-        case HRM_N:
         case HRM_E:
         case HRM_I:
         case HRM_O:
@@ -180,6 +178,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case MSE_KEY:
         case CMD_SPC:
             return 200;
+        case HRM_T:
+        case HRM_N:
+            return 150;
         default:
             return TAPPING_TERM;
     }
