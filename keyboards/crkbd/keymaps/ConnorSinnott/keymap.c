@@ -281,30 +281,6 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_BLUE);
             break;
         }
-//        case _NUMBER: {
-//            if(!is_keyboard_master()) {
-//                rgb_matrix_set_color(g_led_config.matrix_co[0][2], RGB_BLUE);
-//                rgb_matrix_set_color(g_led_config.matrix_co[0][3], RGB_BLUE);
-//                rgb_matrix_set_color(g_led_config.matrix_co[0][4], RGB_BLUE);
-//
-//                rgb_matrix_set_color(g_led_config.matrix_co[1][2], RGB_BLUE);
-//                rgb_matrix_set_color(g_led_config.matrix_co[1][3], RGB_BLUE);
-//                rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_BLUE);
-//
-//                rgb_matrix_set_color(g_led_config.matrix_co[2][1], RGB_BLUE);
-//                rgb_matrix_set_color(g_led_config.matrix_co[2][2], RGB_BLUE);
-//                rgb_matrix_set_color(g_led_config.matrix_co[2][3], RGB_BLUE);
-//                rgb_matrix_set_color(g_led_config.matrix_co[2][4], RGB_BLUE);
-//            } else {
-//                rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_WHITE);
-//                rgb_matrix_set_color(g_led_config.matrix_co[2][4], RGB_WHITE);
-//
-//                rgb_matrix_set_color(g_led_config.matrix_co[2][1], RGB_GREEN);
-//                rgb_matrix_set_color(g_led_config.matrix_co[2][2], RGB_GREEN);
-//                rgb_matrix_set_color(g_led_config.matrix_co[2][3], RGB_GREEN);
-//                rgb_matrix_set_color(g_led_config.matrix_co[2][5], RGB_GREEN);}
-//            break;
-//        }
         case _ADJUST: {
             rgb_matrix_set_color_all(0, 0, 0);
             if(is_keyboard_master()) {
@@ -353,7 +329,6 @@ void sentence_case_sync(uint8_t initiator2target_buffer_size, const void *initia
 }
 
 void keyboard_post_init_user() {
-    // sync caps word state
     transaction_register_rpc(RPC_ID_USER_CAPS_WORD_SYNC, caps_word_sync);
     transaction_register_rpc(RPC_ID_USER_SENTENCE_CASE_SYNC, sentence_case_sync);
 }
