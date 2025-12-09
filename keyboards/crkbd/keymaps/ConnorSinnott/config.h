@@ -49,6 +49,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define SELECT_WORD_OS_MAC
 
+#define RGBLIGHT_SLEEP
+
 #ifdef RGB_MATRIX_ENABLE
     #define RGB_MATRIX_KEYPRESSES // reacts to keypresses
     #define RGB_MATRIX_SLEEP // turn off effects when suspended
