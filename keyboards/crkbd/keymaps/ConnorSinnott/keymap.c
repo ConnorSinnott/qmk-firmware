@@ -29,7 +29,6 @@ enum layers {
     _LOWER,
     _RAISE,
     _MOUSE,
-    _NUMBER,
     _ADJUST
 };
 
@@ -45,7 +44,6 @@ enum custom_keycodes {
 #define HRM_R    MT(MOD_LCTL, KC_R)
 #define HRM_S    MT(MOD_LGUI, KC_S)
 #define HRM_T    MT(MOD_LSFT, KC_T)
-#define HRM_Z    LT(_NUMBER, KC_Z)
 
 // Home row mods - Right hand
 //[max] ########
@@ -78,6 +76,7 @@ enum custom_keycodes {
 #define CMD_C    G(KC_C)
 #define CMD_V    G(KC_V)
 #define KC_DQUOT  S(KC_QUOT)
+#define KC_QSTN   S(KC_SLSH)
 
 // Toggle Keys
 #define SC_TOGG SENTENCE_CASE_TOGGLE
@@ -89,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
        KC_ESC,   HRM_A,   HRM_R,   HRM_S,   HRM_T,    KC_G,                         KC_M,   HRM_N,   HRM_E,   HRM_I,   HRM_O, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      CW_TOGG,   HRM_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, SFT_SFT,
+      CW_TOGG,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, SFT_SFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                            KC_ESC, CMD_SPC,  KC_TAB,     KC_ENT,  MO_LWR, MSE_KEY
                                       //`--------------------------'  `--------------------------'
@@ -97,11 +96,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_LOWER] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, _______, _______, _______, _______, _______,                      JW_LEFT, _______, _______, JW_RGHT, KC_PGUP, _______,
+      _______, _______,    KC_7,    KC_8,    KC_9, _______,                      JW_LEFT, _______, _______, JW_RGHT, KC_PGUP, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, _______, CW_TOGG,JS_ARROW,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_PGDN, _______,
+      _______, _______,    KC_4,    KC_5,    KC_6,JS_ARROW,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_PGDN, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, C(KC_1), C(KC_2), C(KC_3), C(KC_4), C(KC_5),                      _______, SFT_SFT,  KC_F12,APP_BACK,APP_FORW, _______,
+      _______,    KC_0,    KC_1,    KC_2,    KC_3, _______,                      _______, SFT_SFT,  KC_F12,APP_BACK,APP_FORW, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                          DEL_WORD, KC_BSPC, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -109,11 +108,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_RAISE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, _______,  KC_AT, KC_LCBR, KC_RCBR,  KC_AMPR,                      KC_ASTR,  KC_GRV, KC_TILD, KC_PLUS, _______, _______,
+      _______, _______,  KC_AT, KC_LCBR, KC_RCBR,  KC_AMPR,                      KC_ASTR, KC_TILD,  KC_GRV, KC_PLUS, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, KC_HASH,  KC_DLR, KC_LPRN, KC_RPRN, KC_MINS,                      KC_UNDS, KC_QUOT, KC_COLN, KC_EXLM,  KC_EQL, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, _______,                      _______,KC_DQUOT, KC_SCLN, KC_PIPE, KC_BSLS, _______,
+      _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC,    KC_0,                         KC_1,KC_DQUOT, KC_SCLN, KC_PIPE, KC_BSLS, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -126,18 +125,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, MS_BTN2, MS_BTN3, MS_WHLD, MS_BTN1, _______,                      _______, MS_LEFT, MS_DOWN, MS_RGHT, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,    _______, _______, _______
-                                      //`--------------------------'  `--------------------------'
-  ),
-
-    [_NUMBER] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, _______, _______, _______, _______, _______,                      _______,    KC_7,    KC_8,    KC_9, _______, _______,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, _______, _______, _______,                      _______,    KC_4,    KC_5,    KC_6, _______, _______,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, _______, _______, _______,                      _______,    KC_1,    KC_2,    KC_3,    KC_0, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -180,17 +167,17 @@ bool caps_word_press_user(uint16_t keycode) {
 // Per-key tapping term (matching ZMK's 200ms for home row mods)
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case HRM_A:
-        case HRM_R:
-        case HRM_S:
-        case HRM_Z:
-        case HRM_E:
-        case HRM_I:
-        case HRM_O:
-        case LWR_ENT:
-        case MSE_KEY:
-        case CMD_SPC:
-            return 200;
+//        case HRM_A:
+//        case HRM_R:
+//        case HRM_S:
+//        case HRM_Z:
+//        case HRM_E:
+//        case HRM_I:
+//        case HRM_O:
+//        case LWR_ENT:
+//        case MSE_KEY:
+//        case CMD_SPC:
+//            return 200;
         case HRM_T:
         case HRM_N:
             return 150;
@@ -275,14 +262,18 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 rgb_matrix_set_color(7, RGB_RED);
                 rgb_matrix_set_color(8, RGB_RED);
 
-                rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_WHITE);
                 rgb_matrix_set_color(g_led_config.matrix_co[1][5], RGB_ORANGE);
 
-                rgb_matrix_set_color(g_led_config.matrix_co[2][1], RGB_YELLOW);
-                rgb_matrix_set_color(g_led_config.matrix_co[2][2], RGB_YELLOW);
-                rgb_matrix_set_color(g_led_config.matrix_co[2][3], RGB_YELLOW);
-                rgb_matrix_set_color(g_led_config.matrix_co[2][4], RGB_YELLOW);
-                rgb_matrix_set_color(g_led_config.matrix_co[2][5], RGB_YELLOW);
+                rgb_matrix_set_color(g_led_config.matrix_co[0][2], RGB_WHITE);
+                rgb_matrix_set_color(g_led_config.matrix_co[0][3], RGB_WHITE);
+                rgb_matrix_set_color(g_led_config.matrix_co[0][4], RGB_WHITE);
+                rgb_matrix_set_color(g_led_config.matrix_co[1][2], RGB_WHITE);
+                rgb_matrix_set_color(g_led_config.matrix_co[1][3], RGB_WHITE);
+                rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_WHITE);
+                rgb_matrix_set_color(g_led_config.matrix_co[2][1], RGB_WHITE);
+                rgb_matrix_set_color(g_led_config.matrix_co[2][2], RGB_WHITE);
+                rgb_matrix_set_color(g_led_config.matrix_co[2][3], RGB_WHITE);
+                rgb_matrix_set_color(g_led_config.matrix_co[2][4], RGB_WHITE);
             }
             break;
         }
@@ -295,31 +286,6 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             rgb_matrix_set_color(g_led_config.matrix_co[1][3], RGB_BLUE);
             rgb_matrix_set_color(g_led_config.matrix_co[0][3], RGB_BLUE);
             rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_BLUE);
-            break;
-        }
-        case _NUMBER: {
-            if(!is_keyboard_master()) {
-                rgb_matrix_set_color(g_led_config.matrix_co[0][2], RGB_BLUE);
-                rgb_matrix_set_color(g_led_config.matrix_co[0][3], RGB_BLUE);
-                rgb_matrix_set_color(g_led_config.matrix_co[0][4], RGB_BLUE);
-
-                rgb_matrix_set_color(g_led_config.matrix_co[1][2], RGB_BLUE);
-                rgb_matrix_set_color(g_led_config.matrix_co[1][3], RGB_BLUE);
-                rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_BLUE);
-
-                rgb_matrix_set_color(g_led_config.matrix_co[2][1], RGB_BLUE);
-                rgb_matrix_set_color(g_led_config.matrix_co[2][2], RGB_BLUE);
-                rgb_matrix_set_color(g_led_config.matrix_co[2][3], RGB_BLUE);
-                rgb_matrix_set_color(g_led_config.matrix_co[2][4], RGB_BLUE);
-            } else {
-//                rgb_matrix_set_color(g_led_config.matrix_co[1][4], RGB_WHITE);
-//                rgb_matrix_set_color(g_led_config.matrix_co[2][4], RGB_WHITE);
-//
-//                rgb_matrix_set_color(g_led_config.matrix_co[2][1], RGB_GREEN);
-//                rgb_matrix_set_color(g_led_config.matrix_co[2][2], RGB_GREEN);
-//                rgb_matrix_set_color(g_led_config.matrix_co[2][3], RGB_GREEN);
-//                rgb_matrix_set_color(g_led_config.matrix_co[2][5], RGB_GREEN);
-            }
             break;
         }
         case _ADJUST: {
@@ -337,13 +303,19 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     return false;
 }
 
+#ifdef COMBO_ENABLE
+const uint16_t PROGMEM test_combo1[] = {HRM_T, HRM_N, COMBO_END};
+combo_t key_combos[] = {
+    COMBO(test_combo1, CW_TOGG),
+};
+#endif
+
 #ifdef ENCODER_MAP_ENABLE
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [_DEFAULT] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT) },
     [_LOWER]   = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT) },
     [_RAISE]   = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT) },
     [_MOUSE]   = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT) },
-    [_NUMBER]  = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT) },
 };
 #endif
 
