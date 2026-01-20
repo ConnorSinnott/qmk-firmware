@@ -84,7 +84,7 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_DEFAULT] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, KC_PIPE,
+       KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, ADJ_PIP,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
        KC_ESC,   HRM_A,   HRM_R,   HRM_S,   HRM_T,    KC_G,                         KC_M,   HRM_N,   HRM_E,   HRM_I,   HRM_O, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -98,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______, _______,    KC_7,    KC_8,    KC_9, _______,                      JW_LEFT, _______, _______, JW_RGHT, KC_PGUP, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, _______,    KC_4,    KC_5,    KC_6,JS_ARROW,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_PGDN, _______,
+      _______, _______,    KC_4,    KC_5,    KC_6,JS_ARROW,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_PGDN,  KC_F12,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______,    KC_0,    KC_1,    KC_2,    KC_3, _______,                      _______, SFT_SFT,  KC_F12,APP_BACK,APP_FORW, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -132,7 +132,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_ADJUST] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      RM_TOGG, UG_SPDU, UG_VALU, UG_NEXT, _______, _______,                      _______, _______, _______, _______, _______, _______,
+      RM_TOGG, UG_SPDU, UG_VALU, UG_NEXT, _______, _______,                      KC_MPLY, _______, KC_VOLD, KC_VOLU, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, UG_SPDD, UG_VALD, UG_PREV, _______, _______,                      _______, _______, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -164,20 +164,8 @@ bool caps_word_press_user(uint16_t keycode) {
     }
 }
 
-// Per-key tapping term (matching ZMK's 200ms for home row mods)
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-//        case HRM_A:
-//        case HRM_R:
-//        case HRM_S:
-//        case HRM_Z:
-//        case HRM_E:
-//        case HRM_I:
-//        case HRM_O:
-//        case LWR_ENT:
-//        case MSE_KEY:
-//        case CMD_SPC:
-//            return 200;
         case HRM_T:
         case HRM_N:
             return 150;
@@ -296,6 +284,10 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 } else {
                     rgb_matrix_set_color(g_led_config.matrix_co[2][4], RGB_RED);
                 }
+            } else {
+                rgb_matrix_set_color(g_led_config.matrix_co[0][2], RGB_ORANGE);
+                rgb_matrix_set_color(g_led_config.matrix_co[0][3], RGB_ORANGE);
+                rgb_matrix_set_color(g_led_config.matrix_co[0][5], RGB_ORANGE);
             }
             break;
         }
